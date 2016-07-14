@@ -19,3 +19,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
+## LiveOSC Files
+DISTFILES += LiveOSC_mod/__init__.py
+DISTFILES += LiveOSC_mod/LiveOSC.py
+DISTFILES += LiveOSC_mod/LiveOSCCallbacks.py
+DISTFILES += LiveOSC_mod/LiveUtils.py
+DISTFILES += LiveOSC_mod/Logger.py
+DISTFILES += LiveOSC_mod/LogServer.py
+DISTFILES += LiveOSC_mod/OSC.py
+DISTFILES += LiveOSC_mod/OSCAPI.txt
+DISTFILES += LiveOSC_mod/RemixNet.py
+DISTFILES += LiveOSC_mod/socket_live8.py
+DISTFILES += LiveOSC_mod/struct.py
