@@ -126,8 +126,8 @@ int main(int argc, char *argv[])
                     data.append(QString::fromStdString(&msg.argv()[i]->S)+"%");
             }
 
-            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress(udpSendAddress), udpSendPort))
-//            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress::LocalHost, udpSendPort))
+//            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress(udpSendAddress), udpSendPort))
+            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress::LocalHost, udpSendPort))
             {
                 qDebug()<<"ERROR: "<<senderSocket->errorString()<<" "<<senderSocket->error();
             }
