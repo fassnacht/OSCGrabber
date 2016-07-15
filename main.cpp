@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         if(a.arguments().contains("osc-listen-port"))
             oscListenPort = a.arguments().at(a.arguments().indexOf(QRegExp("osc-listen-port"))+1).toInt();
 
-        QString oscServerAddress = "172.0.0.1";
+        QString oscServerAddress = "127.0.0.1";
         if(a.arguments().contains("osc-server-address"))
             oscServerAddress = a.arguments().at(a.arguments().indexOf(QRegExp("osc-server-address"))+1);
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
         if(a.arguments().contains("udp-send-port"))
             udpSendPort = a.arguments().at(a.arguments().indexOf(QRegExp("udp-send-port"))+1).toInt();
 
-        QString udpSendAddress = "172.0.0.1";
+        QString udpSendAddress = "127.0.0.1";
         if(a.arguments().contains("udp-send-address"))
             udpSendAddress = a.arguments().at(a.arguments().indexOf(QRegExp("udp-send-address"))+1);
 
@@ -90,10 +90,10 @@ int main(int argc, char *argv[])
         }
         MSG("### --> Listening to Port: "<<oscListenPort);
 
-//        lo::string_type address(oscServerAddress.toStdString());
-//        lo::Address * oscSender = new lo::Address(address, oscSendPort);
+        lo::string_type address(oscServerAddress.toStdString());
+        lo::Address * oscSender = new lo::Address(address, oscSendPort);
 
-        lo::Address * oscSender = new lo::Address("localhost", oscSendPort);
+//        lo::Address * oscSender = new lo::Address("localhost", oscSendPort);
         MSG("### --> Writing on Port: "<<oscSendPort);
 
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 
         server->add_method(NULL, NULL, [=](const char *path, const lo::Message& msg)
         {
-            msg.print();
+//            msg.print();
             QString type = QString::fromStdString(msg.types());
             QString data(path);
             data.append("%");
@@ -126,16 +126,15 @@ int main(int argc, char *argv[])
                     data.append(QString::fromStdString(&msg.argv()[i]->S)+"%");
             }
 
-//            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress(udpSendAddress), udpSendPort))
-            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress::LocalHost, udpSendPort))
+            if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress(udpSendAddress), udpSendPort))
             {
                 qDebug()<<"ERROR: "<<senderSocket->errorString()<<" "<<senderSocket->error();
             }
-            else
-            {
-                qDebug()<<"From live: "<<data;
-                //qDebug()<<"NO ERROR?: "<<senderSocket->errorString()<<" "<<senderSocket->error()<<" valid? "<<senderSocket->isValid();
-            }
+//            else
+//            {
+//                qDebug()<<"From live: "<<data;
+//                //qDebug()<<"NO ERROR?: "<<senderSocket->errorString()<<" "<<senderSocket->error()<<" valid? "<<senderSocket->isValid();
+//            }
         });
 
         //####################################################################################
@@ -179,7 +178,7 @@ int main(int argc, char *argv[])
                     }
                 }
                 //qDebug()<<"Stringlist: "<<splittedData;
-                qDebug()<<"To live: "<<oscSender->send(path, message)<<QString::fromStdString(message.types())<<path._s;
+//                qDebug()<<"To live: "<<oscSender->send(path, message)<<QString::fromStdString(message.types())<<path._s;
             }
             else
             {
