@@ -25,10 +25,10 @@ int main(int argc, char *argv[])
             MSG("### OSCGrabber HELP ###");
             MSG(" ");
             MSG("The following Arguments are available:");
-            MSG("   osc-server-address (address to send osc messages to) [default: 172.0.0.1]");
+            MSG("   osc-server-address (address to send osc messages to) [default: 127.0.0.1]");
             MSG("   osc-send-port      (port to send osc messages to) [default: 7000]");
             MSG("   osc-listen-port    (port on wich OSCGrabber is listening for incomming osc messages) [default: 9001]");
-            MSG("   udp-send-address   (address to send udp converted messages to) [default: 172.0.0.1]");
+            MSG("   udp-send-address   (address to send udp converted messages to) [default: 127.0.0.1]");
             MSG("   udp-send-port      (port to send udp converted messages to) [default: 7799]");
             MSG("   udp-listen-port    (port on wich OSCGrabber is listening for incomming udp messages) [default: 7788]");
             MSG(" ");
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
         //start creating the services
         MSG("### [Creating] UDP service at Port "<<udpListenPort);
-
+        MSG("### Sending to "<<udpSendAddress.toStdString());
         QUdpSocket *listenSocket = new QUdpSocket(&a);
         listenSocket->bind(QHostAddress::AnyIPv4, udpListenPort);
 
@@ -130,11 +130,11 @@ int main(int argc, char *argv[])
             {
                 qDebug()<<"ERROR: "<<senderSocket->errorString()<<" "<<senderSocket->error();
             }
-//            else
-//            {
-//                qDebug()<<"From live: "<<data;
-//                //qDebug()<<"NO ERROR?: "<<senderSocket->errorString()<<" "<<senderSocket->error()<<" valid? "<<senderSocket->isValid();
-//            }
+            else
+            {
+                qDebug()<<"From live: "<<data;
+                //qDebug()<<"NO ERROR?: "<<senderSocket->errorString()<<" "<<senderSocket->error()<<" valid? "<<senderSocket->isValid();
+            }
         });
 
         //####################################################################################
@@ -178,7 +178,8 @@ int main(int argc, char *argv[])
                     }
                 }
                 //qDebug()<<"Stringlist: "<<splittedData;
-//                qDebug()<<"To live: "<<oscSender->send(path, message)<<QString::fromStdString(message.types())<<path._s;
+                qDebug()<<"To live: "<<oscSender->send(path, message)<<QString::fromStdString(message.types())<<path._s;
+
             }
             else
             {
