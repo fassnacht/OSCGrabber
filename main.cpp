@@ -128,11 +128,11 @@ int main(int argc, char *argv[])
 
             if(-1 == senderSocket->writeDatagram(data.toUtf8(), QHostAddress(udpSendAddress), udpSendPort))
             {
-                qDebug()<<"ERROR: "<<senderSocket->errorString()<<" "<<senderSocket->error();
+                //qDebug()<<"ERROR: "<<senderSocket->errorString()<<" "<<senderSocket->error();
             }
             else
             {
-                qDebug()<<"From live: "<<data;
+                //qDebug()<<"From live: "<<data;
                 //qDebug()<<"NO ERROR?: "<<senderSocket->errorString()<<" "<<senderSocket->error()<<" valid? "<<senderSocket->isValid();
             }
         });
@@ -178,13 +178,15 @@ int main(int argc, char *argv[])
                     }
                 }
                 //qDebug()<<"Stringlist: "<<splittedData;
-                qDebug()<<"To live: "<<oscSender->send(path, message)<<QString::fromStdString(message.types())<<path._s;
+                /*qDebug()<<"To live: "<<*/
+                oscSender->send(path, message);//<<QString::fromStdString(message.types())<<path._s;
 
             }
             else
             {
                 lo::string_type path(splittedData.takeFirst().toStdString());
-                qDebug()<<"To live: "<<oscSender->send(path);
+                /*qDebug()<<"To live: "<<*/
+                oscSender->send(path);
             }
 
         });
